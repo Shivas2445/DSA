@@ -18,8 +18,18 @@ jobs:
       - name: Install Dependencies
         run: sudo apt-get update && sudo apt-get install -y g++
 
-      - name: Compile main.cpp
-        run: g++ -o myapp main.cpp
+      - name: List files
+        run: ls -R
 
-      - name: Run Program
+      - name: Compile (try root)
+        run: |
+          if [ -f main.cpp ]; then
+            g++ -o myapp main.cpp
+          elif [ -f src/main.cpp ]; then
+            g++ -o myapp src/main.cpp
+          else
+            echo "main.cpp not found in root or src/" && exit 1
+          fi
+
+      - name: Run
         run: ./myapp

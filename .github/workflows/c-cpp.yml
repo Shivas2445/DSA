@@ -1,0 +1,35 @@
+name: C++ CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Install Dependencies
+        run: sudo apt-get update && sudo apt-get install -y g++
+
+      - name: List files
+        run: ls -R
+
+      - name: Compile (try root)
+        run: |
+          if [ -f main.cpp ]; then
+            g++ -o myapp main.cpp
+          elif [ -f src/main.cpp ]; then
+            g++ -o myapp src/main.cpp
+          else
+            echo "main.cpp not found in root or src/" && exit 1
+          fi
+
+      - name: Run
+        run: ./myapp

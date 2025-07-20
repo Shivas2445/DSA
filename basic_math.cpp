@@ -2,6 +2,7 @@
 #include <vector>
 #include <algorithm>
 #include <climits>
+#include <cmath>
 using namespace std;
 
 // Function to count digits
@@ -37,6 +38,19 @@ bool amstrong_num(int number) {
         temp /= 10;
     }
     return (sum == number);
+}
+
+// Function to check if a number is Prime
+bool check_prime(int number) {
+    if (number <= 1) return false;
+    if (number == 2) return true;
+    if (number % 2 == 0) return false;
+
+    for (int i = 3; i <= sqrt(number); i += 2) {
+        if (number % i == 0)
+            return false;
+    }
+    return true;
 }
 
 // Function to find all divisors
@@ -81,6 +95,11 @@ int main() {
 
         cout << "Armstrong Number: ";
         if (amstrong_num(a[i])) cout << "Yes";
+        else cout << "No";
+        cout << endl;
+
+        cout << "Prime Number: ";
+        if (check_prime(a[i])) cout << "Yes";
         else cout << "No";
         cout << endl;
 
